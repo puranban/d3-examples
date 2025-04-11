@@ -1,0 +1,15 @@
+name: d3-charts
+
+services:
+  react:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      APP_TITLE: ${APP_TITLE:-}
+      NODE_ENV: development
+    ports:
+      - 127.0.0.1:3000:3000
+    command: sh -c 'pnpm install --frozen-lockfile && pnpm dev --host'
