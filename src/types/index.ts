@@ -1,7 +1,8 @@
 // Data types for our charts
 export interface BarData {
-  category: string;
-  value: number;
+  date: string;
+  temperature: number;
+  precipitation: number;
 }
 
 export interface LineData {

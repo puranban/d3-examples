@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Card } from '@chakra-ui/react';
 
 import { useFetchData } from './hooks/useFetchData';
+import { BarData, LineData } from './types';
 import LineChart from './components/LineChart';
-import { LineData } from './types';
+import BarChart from './components/Barchart';
+
 import './App.css'
 
 const params = {
@@ -13,7 +15,8 @@ const params = {
   current: "temperature_2m",
   timezone: "auto",
   temperature_unit: "celsius",
-  forecast_days: 1,
+	daily: ["temperature_2m_max", "temperature_2m_min","precipitation_probability_max"],
+  // forecast_days: 1,
 };
 
 const API_ENDPOINT = import.meta.env.APP_API_ENDPOINT as string;
@@ -23,6 +26,8 @@ const urlParams = new URLSearchParams(params).toString();
 
 function App() {
   const [data, setData] = useState<LineData[]>([]);
+  const [barChartData, setBarChartData] = useState<BarData[]>([]);
+
   const [dimensions, setDimensions] = useState({
     width: Math.min(window.innerWidth * 0.9, 800),
     height: 400
@@ -44,7 +49,16 @@ function App() {
         temperature: hourlyData?.temperature_2m[index],
       }));
 
+      const dailyData = weatherData?.daily;
+      const formattedBarChartData = Object.keys(dailyData?.time)?.map(
+      (_, index) => ({
+        date: dailyData?.time[index],
+        precipitation: dailyData?.precipitation_probability_max[index],
+        temperature: dailyData?.temperature_2m_max[index],
+      }));
       setData(formattedData);
+      setBarChartData(formattedBarChartData);
+
     },
     [weatherData],
   );
@@ -61,7 +75,7 @@ function App() {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="flex flex-col p-6 gap-6">
       <Card.Root className="rounded-2xl border border-gray-300 p-4 hover:-translate-y-0.5 transition-transform">
         <div className="flex items-center gap-4">
           <h1 className="text-3xl font-bold underline">
@@ -72,6 +86,14 @@ function App() {
         <h2>Hourly temperature</h2>
         <LineChart
           data={data}
+          width={dimensions.width}
+          height={dimensions.height}
+        />
+      </Card.Root>
+
+      <Card.Root className="rounded-2xl border border-gray-300 p-4 hover:-translate-y-0.5 transition-transform">
+        <BarChart
+          data={barChartData}
           width={dimensions.width}
           height={dimensions.height}
         />
