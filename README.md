@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# Weather Data Visualization Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Interactive dashboard visualizing Kathmandu weather data with D3.js and React, featuring:
+- Filter to see forecast of 1, 3, 7, 14, and 16 days
+- Multi-line chart (hourly temperature trends)
+- Grouped bar chart (temperature + precipitation)
+- Scatter plot (precipitation vs. humidity)
 
-Currently, two official plugins are available:
+## Tech Stack
+- **Core**: React + TypeScript
+- **Visualization**: D3.js
+- **Utilities**: shadcn
+- **Build**: Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
+- **Responsive** designs
+- **Interactive** tooltips and filtering
+- **Color-coded** multi-day comparisons
+- **Proper axis labeling** with units
 
-## Expanding the ESLint configuration
+## Main Components
+1. `LineChart.tsx` - Multi-day hourly trends 
+2. `BarChart.tsx` - Daily temperature/precipitation comparison
+3. `ScatterPlot.tsx` - Precipitation-humidity correlation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Challenges & Solutions
+| Challenge | Solution |
+|-----------|----------|
+| D3+React integration | Used refs for D3 DOM manipulation |
+| API for realtime weather data | Use [open-meteo](https://open-meteo.com/) public api|
+| Temporal data | Normalized hourly data across days |
+| Multiple scales | Dual measurement system with legends |
+| TypeScript typing | Created custom interfaces for D3 |
 
-- Configure the top-level `parserOptions` property like this:
+### Setup Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+To begin, ensure you have network access. Then, you'll need the following:
+
+1. [Git](https://git-scm.com/)
+2. [Node.JS](https://nodejs.org/en/) version >=22
+3. [Pnpm](https://pnpm.io/)
+
+### Local development
+
+Clone the repository using HTTPS, SSH, or Github CLI
+
+```bash
+git@github.com:puranban/d3-examples.git #SSH
+https://github.com/puranban/d3-examples.git #HTTPS
+gh repo clone puranban/d3-examples #Github CLI
+```
+* Navigate to the project directory
+```bash
+cd d3-examples
+```
+* Create environment variables
+```bash
+touch .env
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+* Update the .env file with the API url
+```bash
+APP_TITLE=d3-visualization
+APP_API_ENDPOINT=https://api.open-meteo.com/v1
+```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+* Install dependencies
+```bash
+pnpm install
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+* Start local development server
+```bash
+pnpm dev
 ```

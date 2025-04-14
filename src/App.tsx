@@ -100,7 +100,6 @@ function App() {
     [weatherData],
   );
 
-  console.log('dimension', dimensions);
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
