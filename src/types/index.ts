@@ -1,21 +1,20 @@
 // Data types for our charts
+export interface LineData {
+  date: string;
+  temperature: number,
+}
+
 export interface BarData {
   date: string;
   temperature: number;
   precipitation: number;
 }
 
-export interface LineData {
-  date: number;
-  temperature: number,
-  precipitation?: number;
-}
-
 export interface ScatterData {
-  x: number;
-  y: number;
-  category: string;
-  size: number;
+  date: string;
+  temperature: number;
+  precipitation: number;
+  humidity: number;
 }
 
 export interface ChartData {
@@ -35,6 +34,6 @@ export interface ChartProps<T> {
 export interface TooltipProps {
   x: number;
   y: number;
-  content: string;
+  content: React.ReactNode;
   visible: boolean;
 }

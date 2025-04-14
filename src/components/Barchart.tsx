@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { BarData, TooltipProps } from '@/types';
 import Tooltip from './Tooltip';
-import { BarData } from '@/types';
 
 interface Props {
   data: BarData[];
@@ -10,12 +10,7 @@ interface Props {
 }
 const BarChart: React.FC<Props> = ({ data, width, height }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [tooltip, setTooltip] = useState<{
-    x: number;
-    y: number;
-    content: string;
-    visible: boolean;
-  }>({ x: 0, y: 0, content: '', visible: false });
+  const [tooltip, setTooltip] = useState<TooltipProps>({ x: 0, y: 0, content: '', visible: false });
 
   useEffect(() => {
     if (!data || data.length === 0 || !svgRef.current) return;
@@ -46,7 +41,7 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
     // Y scale (shared for both metrics)
     const maxTemp = d3.max(data, d => d.temperature) || 0;
     const maxPrecip = d3.max(data, d => d.precipitation) || 0;
-    const yMax = Math.max(maxTemp, maxPrecip); // Scale precipitation differently
+    const yMax = Math.max(maxTemp, maxPrecip);
 
     console.log("bar", data, maxTemp, maxPrecip, yMax);
     const y = d3.scaleLinear()
@@ -76,11 +71,7 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
     g.append("g")
       .attr("class", "axis axis--y")
       .call(d3.axisLeft(y))
-      // .attr("transform", "rotate(-90)")
-      // .attr("y", 6)
-      // .attr("dy", "0.7em")
       .attr("text-anchor", "end")
-      // .text("Value")
       .selectAll("text")
       .style("font-size", "0.7rem");
 
@@ -105,11 +96,14 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
           setTooltip({
             x: event.pageX,
             y: event.pageY,
-            content: `${d.date}<br>${metric}: ${
-              metric === 'temperature' 
-                ? `${d.temperature}°C` 
-                : `${d.precipitation}mm`
-            }`,
+            content: (<>
+              <strong>{d.date}</strong> <br />
+              {metric}: {
+                metric === 'temperature'
+                  ? `${d.temperature}°C`
+                  : `${d.precipitation}mm`
+              }
+            </>),
             visible: true
           });
         })
@@ -137,16 +131,6 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
         .text(metric === 'temperature' ? 'Temperature (°C)' : 'Precipitation (mm)')
         .style("font-size", "0.7rem");
     });
-
-    // Add chart title
-    svg.append("text")
-      .attr("x", width / 2)
-      .attr("y", 20)
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("font-weight", "bold")
-      .text("Daily Weather Forecast (7 days)");
-
   }, [data, width, height]);
 
   return (

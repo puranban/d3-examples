@@ -2,10 +2,12 @@ import React from 'react';
 import { TooltipProps } from '../types';
 
 const Tooltip: React.FC<TooltipProps> = ({ x, y, content, visible }) => {
-  if (!visible) return null;
+  if (!visible) {
+    return null;
+  }
 
   return (
-    <div 
+    <div
       className="tooltip"
       style={{
         position: 'absolute',
