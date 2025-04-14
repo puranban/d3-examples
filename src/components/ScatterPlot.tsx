@@ -112,7 +112,7 @@ const ScatterPlot: React.FC<Props> = ({ data, width, height }) => {
           visible: true
         });
       })
-      .on("mouseout", function(event: MouseEvent, d: ScatterData) {
+      .on("mouseout", function(_, d: ScatterData) {
         d3.select(this).attr("opacity", 0.8).attr("r", size(d.precipitation));
         setTooltip((prev) => ({...prev, visible: false }));
       });

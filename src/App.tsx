@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select';
 import { BarData, LineData, ScatterData } from '@/types';
 import LineChart from '@/components/LineChart';
-import BarChart from '@/components/Barchart';
+import BarChart from '@/components/BarChart';
 import ScatterPlot from '@/components/ScatterPlot';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
@@ -119,9 +119,9 @@ function App() {
   return (
     <div className="flex flex-col p-6 gap-6">
       <CardHeader>
-        <CardTitle>{ weatherData?.timezone }</CardTitle>
+        <CardTitle>{ weatherData?.timezone ?? "-" }</CardTitle>
         <CardDescription>
-          {`${weatherData?.current?.temperature_2m} ${weatherData?.current_units?.temperature_2m}`}
+          {`${weatherData?.current?.temperature_2m ?? "-"} ${weatherData?.current_units?.temperature_2m ?? "-"}`}
         </CardDescription>
       </CardHeader>
 
