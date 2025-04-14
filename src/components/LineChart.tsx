@@ -18,7 +18,6 @@ const LineChart: React.FC<Props> = ({ data, width, height, }) => {
     visible: false,
   });
 
-  console.log('line chart', data);
   useEffect(
     () => {
       if (!data || data.length === 0 || !svgRef.current) {
@@ -43,8 +42,6 @@ const LineChart: React.FC<Props> = ({ data, width, height, }) => {
       }));
 
       const uniqueDates = Array.from(new Set(parsedData.map(d => d.date)));
-
-      console.log('dates uni', uniqueDates);
 
       // X scale (time of day)
       const x = d3.scaleTime()

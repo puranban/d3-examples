@@ -10,7 +10,12 @@ interface Props {
 }
 const BarChart: React.FC<Props> = ({ data, width, height }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [tooltip, setTooltip] = useState<TooltipProps>({ x: 0, y: 0, content: '', visible: false });
+  const [tooltip, setTooltip] = useState<TooltipProps>({
+    x: 0,
+    y: 0,
+    content: '',
+    visible: false,
+  });
 
   useEffect(() => {
     if (!data || data.length === 0 || !svgRef.current) return;
@@ -43,7 +48,6 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
     const maxPrecip = d3.max(data, d => d.precipitation) || 0;
     const yMax = Math.max(maxTemp, maxPrecip);
 
-    console.log("bar", data, maxTemp, maxPrecip, yMax);
     const y = d3.scaleLinear()
       .domain([0, yMax])
       .nice()

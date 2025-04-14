@@ -11,7 +11,12 @@ interface Props {
 
 const ScatterPlot: React.FC<Props> = ({ data, width, height }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [tooltip, setTooltip] = useState<TooltipProps>({ x: 0, y: 0, content: '', visible: false });
+  const [tooltip, setTooltip] = useState<TooltipProps>({
+    x: 0,
+    y: 0,
+    content: '',
+    visible: false,
+  });
 
   useEffect(() => {
     if (!data || data.length === 0 || !svgRef.current) return;
