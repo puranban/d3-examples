@@ -6,12 +6,14 @@ Interactive dashboard visualizing Kathmandu weather data with D3.js and React, f
 - Multi-line chart (hourly temperature trends)
 - Grouped bar chart (temperature + precipitation)
 - Scatter plot (precipitation vs. humidity)
+- Visit live here https://d3-examples-drab.vercel.app/
 
 ## Tech Stack
 - **Core**: React + TypeScript
 - **Visualization**: D3.js
 - **Utilities**: shadcn
 - **Build**: Vite
+- **Deployment**: Vercel
 
 ## Key Features
 - **Responsive** designs
