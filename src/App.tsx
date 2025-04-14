@@ -41,13 +41,13 @@ function App() {
 
   const params = useMemo(
     () => ({
-      latitude: 27.7017,
-      longitude: 85.3206,
-      hourly: ["precipitation_probability", "temperature_2m"],
+      latitude: "27.7017",
+      longitude: "85.3206",
+      hourly: `precipitation_probability,temperature_2m`,
       current: "temperature_2m",
       timezone: "auto",
       temperature_unit: "celsius",
-      daily: ["temperature_2m_max","precipitation_probability_max", "relative_humidity_2m_max"],
+      daily: `temperature_2m_max,precipitation_probability_max,relative_humidity_2m_max`,
       forecast_days: filterValue,
     }),
     [filterValue],
@@ -62,7 +62,7 @@ function App() {
 
   useEffect(
     () => {
-      if (!weatherData || weatherData.length === 0) {
+      if (!weatherData) {
         return;
       }
       const hourlyData = weatherData?.hourly;

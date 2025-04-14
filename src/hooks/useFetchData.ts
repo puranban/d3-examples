@@ -1,7 +1,8 @@
+import { WeatherApiResponse } from "@/types";
 import { useEffect, useState } from "react";
 
 export const useFetchData = (url: string, params: string) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<WeatherApiResponse>();
   const[loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -9,7 +10,7 @@ export const useFetchData = (url: string, params: string) => {
       setLoading(true);
       try {
         const responses = await fetch(`${url}?${params}`);
-        const response = await responses.json();
+        const response = await responses.json() as WeatherApiResponse;
         setData(response);
         setLoading(false);
       } catch (error) {

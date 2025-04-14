@@ -29,7 +29,7 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
 
     // Prepare data for grouped bars
     const dates = data.map(d => d.date);
-    const metrics = ['temperature', 'precipitation'] as const;
+    const metrics = ['temperature', 'precipitation'] as string[];
 
     // X scale for dates (outer grouping)
     const x0 = d3.scaleBand()
@@ -87,10 +87,10 @@ const BarChart: React.FC<Props> = ({ data, width, height }) => {
       .attr("transform", d => `translate(${x0(d.date)},0)`);
 
     // Add bars for each metric
-    metrics.forEach(metric => {
+    metrics.forEach((metric) => {
       dateGroups.append("rect")
         .attr("class", `bar bar-${metric}`)
-        .attr("x", x1(String(metric)))
+        .attr("x", x1(metric) ?? '')
         .attr("y", d => y(metric === 'temperature' ? d.temperature : d.precipitation))
         .attr("width", x1.bandwidth())
         .attr("height", d => innerHeight - y(metric === 'temperature' ? d.temperature : d.precipitation))
